@@ -1,0 +1,10 @@
+.idea/*
+!.idea/.gitignore
+!.idea/codeStyles
+!.idea/dictionaries
+!.idea/runConfigurations
+!.idea/jsLibraryMappings.xml
+!.idea/misc.xml
+!.idea/modules.xml
+!.idea/vcs.xml
+/target
