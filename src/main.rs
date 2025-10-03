@@ -1,5 +1,6 @@
 use anyhow::{Context, Result};
 use clap::Parser;
+use colored::Colorize;
 
 /// The command to run for creating a project
 #[derive(Parser)]
@@ -18,6 +19,12 @@ struct Command {
 fn main() -> Result<()> {
     let args = Command::parse();
 
+    if args.debug {
+        println!();
+        printinfo("Running in debug mode.");
+        println!()
+    }
+
     let name = &args.name;
 
     let path = match args.path {
@@ -25,10 +32,19 @@ fn main() -> Result<()> {
         None => std::env::current_dir()?,
     };
 
+    if args.debug {
+        println!("{} {}", "Project name:".green().bold(), name);
+        println!("{} {}", "Project path:".green().bold(), path.display())
+    }
+
     let project_path = format!("{}/{}", path.display(), name);
 
     std::fs::create_dir(&project_path)
         .with_context(|| format!("Unable to create project directory at '{}'", &project_path))?;
 
     Ok(())
+}
+
+fn printinfo(message: &str) {
+    println!("{}", message.yellow().bold())
 }
